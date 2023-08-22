@@ -1,9 +1,18 @@
 package com.notanull.peluqueriacanina.igu;
 
+import com.notanull.peluqueriacanina.logica.Controladora;
+import com.notanull.peluqueriacanina.logica.Mascota;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class Principal extends javax.swing.JFrame {
 
+    private Controladora control;
+    
+    
     public Principal() {
         initComponents();
+        this.control = new Controladora();
     }
 
     @SuppressWarnings("unchecked")
@@ -19,7 +28,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -32,6 +45,11 @@ public class Principal extends javax.swing.JFrame {
         btnVerDatos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnVerDatos.setForeground(new java.awt.Color(0, 0, 0));
         btnVerDatos.setText("Ver Datos");
+        btnVerDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerDatosActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(0, 0, 0));
@@ -130,6 +148,16 @@ public class Principal extends javax.swing.JFrame {
         carga.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
+    private void btnVerDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDatosActionPerformed
+        VerDatos datos = new VerDatos();
+        datos.setVisible(true);
+        datos.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnVerDatosActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+    }//GEN-LAST:event_formWindowOpened
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargarDatos;
@@ -140,4 +168,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    
 }

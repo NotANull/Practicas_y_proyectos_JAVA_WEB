@@ -1,6 +1,7 @@
 package com.notanull.peluqueriacanina.logica;
 
 import com.notanull.peluqueriacanina.persistencia.ControladoraPersistencia;
+import java.util.List;
 
 public class Controladora {
     
@@ -8,6 +9,10 @@ public class Controladora {
 
     public void guardar(Duenio unDuenio, Mascota unaMascota) {
         this.controladoraPersistencia.guardar(unDuenio, unaMascota);
+    }
+
+    public List<Mascota> traerMascotas() {
+        return this.controladoraPersistencia.traerMascotas();
     }
 
 }

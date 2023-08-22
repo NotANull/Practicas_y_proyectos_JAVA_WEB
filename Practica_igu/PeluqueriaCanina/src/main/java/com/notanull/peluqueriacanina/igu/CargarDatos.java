@@ -3,6 +3,8 @@ package com.notanull.peluqueriacanina.igu;
 import com.notanull.peluqueriacanina.logica.Controladora;
 import com.notanull.peluqueriacanina.logica.Duenio;
 import com.notanull.peluqueriacanina.logica.Mascota;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 public class CargarDatos extends javax.swing.JFrame {
 
@@ -281,6 +283,12 @@ public class CargarDatos extends javax.swing.JFrame {
         unaMascota.setMiDuenio(unDuenio);
         
         this.control.guardar(unDuenio, unaMascota);
+        
+        JOptionPane optionPane = new JOptionPane("Se guardó correctamente");
+        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = optionPane.createDialog("La información se guardó exitosamente");
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
