@@ -3,6 +3,8 @@ package com.notanull.peluqueriacanina.igu;
 import com.notanull.peluqueriacanina.logica.Controladora;
 import com.notanull.peluqueriacanina.logica.Mascota;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VerDatos extends javax.swing.JFrame {
@@ -24,8 +26,8 @@ public class VerDatos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMascotas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -57,11 +59,16 @@ public class VerDatos extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Datos de mascotas:");
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton1.setText("EDITAR");
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnEditar.setText("EDITAR");
 
-        jButton2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton2.setText("BORRAR");
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnEliminar.setText("BORRAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -78,9 +85,9 @@ public class VerDatos extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -92,8 +99,8 @@ public class VerDatos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(131, Short.MAX_VALUE))
         );
 
@@ -136,10 +143,26 @@ public class VerDatos extends javax.swing.JFrame {
         cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        if (this.tablaMascotas.getRowCount() > 0) { //Preguntamos si la tabla tenga más de un dato
+            if (this.tablaMascotas.getSelectedRow() != -1) { //Preguntamos si al seleccionar una fila es distinta de 0
+                //Obtengo el id de la mascota a eliminar
+                int numCliente = Integer.parseInt(String.valueOf(this.tablaMascotas.getValueAt(this.tablaMascotas.getSelectedRow(), 0)));
+                this.control.borrarMascota(numCliente); //Llamo al método que borra
+                mostrarMensaje("Mascota eliminada correctamente", "Info", "Borrado de Mascota");
+            } else {
+                mostrarMensaje("No seleccionó ninguna mascota", "Error", "Error al eliminar");
+            }
+        } else {
+            mostrarMensaje("No hay elemento para eliminar en la tabla", "Error", "Error al eliminar");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -148,6 +171,17 @@ public class VerDatos extends javax.swing.JFrame {
     private javax.swing.JTable tablaMascotas;
     // End of variables declaration//GEN-END:variables
 
+    public void mostrarMensaje(String mensaje, String tipo, String titulo) {
+        JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        } else if(tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
     
     private void cargarTabla() {
         //Definimos el modelo que queremos que tenga la tabla

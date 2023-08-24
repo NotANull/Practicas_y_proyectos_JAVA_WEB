@@ -15,4 +15,8 @@ public class Controladora {
         return this.controladoraPersistencia.traerMascotas();
     }
 
+    public void borrarMascota(int numCliente) {
+        this.controladoraPersistencia.borrarMascota(numCliente);
+    }
+
 }
