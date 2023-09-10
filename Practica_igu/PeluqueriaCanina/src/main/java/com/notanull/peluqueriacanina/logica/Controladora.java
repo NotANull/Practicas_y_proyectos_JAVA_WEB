@@ -19,4 +19,35 @@ public class Controladora {
         this.controladoraPersistencia.borrarMascota(numCliente);
     }
 
+    public Mascota traerMascota(int numCliente) {
+        return this.controladoraPersistencia.traerMascota(numCliente);
+    }
+
+    public void modificarMascota(Duenio unDuenio, Mascota unaMascota, Mascota unaMascotaOriginal) {
+        
+        unaMascotaOriginal.setNombre(unaMascota.getNombre());
+        unaMascotaOriginal.setRaza(unaMascota.getRaza());
+        unaMascotaOriginal.setColor(unaMascota.getColor());
+        unaMascotaOriginal.setObservaciones(unaMascota.getObservaciones());
+        unaMascotaOriginal.setAtencionEspecial(unaMascota.getAtencionEspecial());
+        unaMascotaOriginal.setAlergico(unaMascota.getAlergico());
+        
+        this.controladoraPersistencia.modificarMascota(unaMascotaOriginal);
+        
+        Duenio duenio = this.buscarDuenio(unaMascotaOriginal.getMiDuenio().getIndDuenio());
+        duenio.setCellDuenio(unDuenio.getCellDuenio());
+        duenio.setNombre(unDuenio.getNombre());
+        
+        this.modificarDuenio(duenio);
+        
+    }
+
+    private Duenio buscarDuenio(int indDuenio) {
+        return this.controladoraPersistencia.buscarDuenio(indDuenio);
+    }
+
+    private void modificarDuenio(Duenio duenio) {
+        this.controladoraPersistencia.modificarDuenio(duenio);
+    }
+
 }

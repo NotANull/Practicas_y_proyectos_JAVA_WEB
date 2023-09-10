@@ -6,13 +6,15 @@ import com.notanull.peluqueriacanina.logica.Mascota;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-public class CargarDatos extends javax.swing.JFrame {
+public class ModificarDatos extends javax.swing.JFrame {
 
-    private Controladora control;
-    
-    public CargarDatos() {
+    private Controladora control = null;
+    private Mascota unaMascotaOriginal = null;
+
+    public ModificarDatos(int numCliente) {
         initComponents();
         this.control = new Controladora();
+        cargarDatos(numCliente);
     }
 
     @SuppressWarnings("unchecked")
@@ -51,7 +53,7 @@ public class CargarDatos extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Carga de Datos");
+        jLabel1.setText("Modificación de Datos");
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -115,7 +117,7 @@ public class CargarDatos extends javax.swing.JFrame {
         });
 
         btnGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("Guardar Cambios");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -261,34 +263,39 @@ public class CargarDatos extends javax.swing.JFrame {
         this.txtFieldNomDuenio.setText("");
         this.txtFieldNombre.setText("");
         this.txtFieldRaza.setText("");
-        
+
         //Para los comboBox
         this.cmbAlergico.setSelectedIndex(0);
         this.cmbAteEspecial.setSelectedIndex(0);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+
+        //Todos los datos del dueño
         Duenio unDuenio = new Duenio();
         unDuenio.setCellDuenio(this.txtFieldCelDuenio.getText());
         unDuenio.setNombre(this.txtFieldNomDuenio.getText());
-        
+
+        //Todos los datos de la mascota
         Mascota unaMascota = new Mascota();
         unaMascota.setNombre(this.txtFieldNombre.getText());
         unaMascota.setRaza(this.txtFieldRaza.getText());
         unaMascota.setColor(this.txtFieldColor.getText());
-        unaMascota.setAlergico((String)this.cmbAlergico.getSelectedItem());
-        unaMascota.setAtencionEspecial((String)this.cmbAteEspecial.getSelectedItem());
+        unaMascota.setAlergico((String) this.cmbAlergico.getSelectedItem());
+        unaMascota.setAtencionEspecial((String) this.cmbAteEspecial.getSelectedItem());
         unaMascota.setObservaciones(this.txtArea.getText());
         unaMascota.setMiDuenio(unDuenio);
+
+        this.control.modificarMascota(unDuenio, unaMascota, this.unaMascotaOriginal);
+
+        //Mensaje de todo OK
+        this.mostrarMensaje("Edición realizada correctamente", "Info", "Edición correcta");
         
-        this.control.guardar(unDuenio, unaMascota);
+        VerDatos pantalla = new VerDatos();
+        pantalla.setVisible(true);
+        pantalla.setLocationRelativeTo(null);
         
-        JOptionPane optionPane = new JOptionPane("Se guardó correctamente");
-        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = optionPane.createDialog("La información se guardó exitosamente");
-        dialog.setAlwaysOnTop(true);
-        dialog.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -318,4 +325,43 @@ public class CargarDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txtFieldNombre;
     private javax.swing.JTextField txtFieldRaza;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarDatos(int numCliente) {
+
+        this.unaMascotaOriginal = this.control.traerMascota(numCliente);
+
+        //Para los txtField
+        this.txtArea.setText(unaMascotaOriginal.getObservaciones());
+        this.txtFieldCelDuenio.setText(unaMascotaOriginal.getMiDuenio().getCellDuenio());
+        this.txtFieldColor.setText(unaMascotaOriginal.getColor());
+        this.txtFieldNomDuenio.setText(unaMascotaOriginal.getMiDuenio().getNombre());
+        this.txtFieldNombre.setText(unaMascotaOriginal.getNombre());
+        this.txtFieldRaza.setText(unaMascotaOriginal.getRaza());
+
+        //Para los comboBox
+        if (unaMascotaOriginal.getAlergico().equals("SI")) {
+            this.cmbAlergico.setSelectedIndex(1);
+        } else if (unaMascotaOriginal.getAlergico().equals("NO")) {
+            this.cmbAlergico.setSelectedIndex(2);
+        }
+
+        if (unaMascotaOriginal.getAtencionEspecial().equals("SI")) {
+            this.cmbAteEspecial.setSelectedIndex(1);
+        } else if (unaMascotaOriginal.getAtencionEspecial().equals("NO")) {
+            this.cmbAteEspecial.setSelectedIndex(2);
+        }
+
+    }
+
+    public void mostrarMensaje(String mensaje, String tipo, String titulo) {
+        JOptionPane optionPane = new JOptionPane(mensaje);
+        if (tipo.equals("Info")) {
+            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+        } else if (tipo.equals("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+        }
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
 }

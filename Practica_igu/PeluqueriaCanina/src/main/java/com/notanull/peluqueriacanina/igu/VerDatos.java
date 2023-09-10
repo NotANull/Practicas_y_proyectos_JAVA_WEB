@@ -29,7 +29,7 @@ public class VerDatos extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -61,6 +61,11 @@ public class VerDatos extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnEditar.setText("EDITAR");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnEliminar.setText("BORRAR");
@@ -151,6 +156,7 @@ public class VerDatos extends javax.swing.JFrame {
                 int numCliente = Integer.parseInt(String.valueOf(this.tablaMascotas.getValueAt(this.tablaMascotas.getSelectedRow(), 0)));
                 this.control.borrarMascota(numCliente); //Llamo al método que borra
                 mostrarMensaje("Mascota eliminada correctamente", "Info", "Borrado de Mascota");
+                this.cargarTabla(); //Vuelvo a cargar la tabla para que nos actualice al momento de eliminar
             } else {
                 mostrarMensaje("No seleccionó ninguna mascota", "Error", "Error al eliminar");
             }
@@ -158,6 +164,27 @@ public class VerDatos extends javax.swing.JFrame {
             mostrarMensaje("No hay elemento para eliminar en la tabla", "Error", "Error al eliminar");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (this.tablaMascotas.getRowCount() > 0) { //Preguntamos si la tabla tenga más de un dato
+            if (this.tablaMascotas.getSelectedRow() != -1) { //Preguntamos si al seleccionar una fila es distinta de 0
+                //Obtengo el id de la mastoa a editar
+                int numCliente = Integer.parseInt(String.valueOf(this.tablaMascotas.getValueAt(this.tablaMascotas.getSelectedRow(), 0)));
+                
+                ModificarDatos pantallaModificar = new ModificarDatos(numCliente);
+                pantallaModificar.setVisible(true);
+                pantallaModificar.setLocationRelativeTo(null);
+                
+                this.dispose();
+                
+            } else {
+                mostrarMensaje("No seleccionó ninguna mascota", "Error", "Error al eliminar");
+            }
+        } else {
+            mostrarMensaje("No hay elemento para eliminar en la tabla", "Error", "Error al eliminar");
+        }        
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

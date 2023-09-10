@@ -1,10 +1,14 @@
 com\notanull\peluqueriacanina\igu\CargarDatos$2.class
+com\notanull\peluqueriacanina\igu\VerDatos$4.class
 com\notanull\peluqueriacanina\igu\Principal$3.class
+com\notanull\peluqueriacanina\igu\Principal$5.class
 com\notanull\peluqueriacanina\persistencia\DuenioJpaController.class
+com\notanull\peluqueriacanina\igu\ModificarDatos.class
 com\notanull\peluqueriacanina\persistencia\ControladoraPersistencia.class
 com\notanull\peluqueriacanina\persistencia\exceptions\NonexistentEntityException.class
 com\notanull\peluqueriacanina\persistencia\MascotaJpaController.class
 com\notanull\peluqueriacanina\logica\Mascota.class
+com\notanull\peluqueriacanina\igu\ModificarDatos$1.class
 com\notanull\peluqueriacanina\igu\Principal$2.class
 com\notanull\peluqueriacanina\logica\Controladora.class
 com\notanull\peluqueriacanina\persistencia\exceptions\PreexistingEntityException.class
@@ -17,6 +21,7 @@ com\notanull\peluqueriacanina\logica\Duenio_.class
 com\notanull\peluqueriacanina\igu\Principal$4.class
 com\notanull\peluqueriacanina\igu\CargarDatos.class
 com\notanull\peluqueriacanina\igu\VerDatos$1.class
+com\notanull\peluqueriacanina\igu\ModificarDatos$2.class
 com\notanull\peluqueriacanina\igu\Principal$1.class
 com\notanull\peluqueriacanina\PeluqueriaCanina.class
 com\notanull\peluqueriacanina\igu\VerDatos$3.class
